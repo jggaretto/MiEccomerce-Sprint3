@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const ejsLayouts = require('express-ejs-layouts');
 
-const { getIndex, getProductDetail, getCategory } = require('./controllers/productControllers');
+const { getIndex, getProductDetail, getCategory, getProductList } = require('./controllers/productControllers');
 const { getCart, addToCart, increaseQuantity, decreaseQuantity, emptyCart } = require('./controllers/cartController');
 
 const app = express();
@@ -42,9 +42,7 @@ app.get('/index', getIndex);
 
 app.get('/products/:id', getProductDetail);
 
-app.get('/products', (req, res) => {
-  res.redirect('/products/1');
-});
+app.get('/products', getProductList);
 
 // ─── Rutas del carrito ────────────────────────────────────────────────────────
 app.get('/cart', getCart);

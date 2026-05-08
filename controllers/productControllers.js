@@ -4,6 +4,7 @@ const {
   fetchProductById,
   fetchRelatedProducts,
   fetchProductsByCategory,
+  fetchProductsSorted,
 } = require('../service/productsService');
 
 function getIndex(req, res) {
@@ -35,4 +36,10 @@ function getCategory(req, res) {
   });
 }
 
-module.exports = { getIndex, getProductDetail, getCategory };
+function getProductList(req, res) {
+  const sort = req.query.sort;
+  const products = fetchProductsSorted(sort);
+  res.render('pages/productList', { title: 'Productos', products, sort });
+}
+
+module.exports = { getIndex, getProductDetail, getCategory, getProductList };

@@ -932,3 +932,34 @@ a {
 .error404-actions {
   margin-top: 8px;
 }
+
+/* ─── Ordenamiento de productos ─────────────────────────── */
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.sort-bar span {
+  font-weight: 600;
+  color: #444;
+}
+.sort-btn {
+  padding: 6px 14px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  text-decoration: none;
+  color: #555;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+.sort-btn:hover {
+  border-color: #555;
+  color: #222;
+}
+.sort-btn.active {
+  border-color: #333;
+  background: #333;
+  color: #fff;
+}

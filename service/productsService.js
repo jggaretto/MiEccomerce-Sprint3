@@ -31,6 +31,17 @@ function fetchProductsByCategory(category) {
   return getProductsByCategory(category);
 }
 
+function fetchProductsSorted(sort) {
+  const products = getAllProducts();
+  if (sort === 'asc') {
+    return products.slice().sort((a, b) => a.price - b.price);
+  }
+  if (sort === 'desc') {
+    return products.slice().sort((a, b) => b.price - a.price);
+  }
+  return products;
+}
+
 module.exports = {
   fetchAllProducts,
   fetchProductById,
@@ -38,4 +49,5 @@ module.exports = {
   fetchFeaturedProducts,
   fetchRelatedProducts,
   fetchProductsByCategory,
+  fetchProductsSorted,
 };

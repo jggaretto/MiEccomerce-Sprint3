@@ -19,7 +19,8 @@
     </div>
 
     <div class="product-info">
-      <h1><%= product.name %></h1>
+     <h1><%= product.name %></h1>
+      <p class="product-category"><i class="bi bi-tag"></i> <%= product.category %></p>
       <p class="product-price-large"><%= product.price.toLocaleString('es-AR') %> <span>puntos</span></p>
 
       <form action="/cart/add" method="POST">

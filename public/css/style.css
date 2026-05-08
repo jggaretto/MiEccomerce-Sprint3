@@ -889,3 +889,46 @@ a {
   background: #555;
   color: #fff;
 }
+
+/* ─── Categoría en detalle de producto ──────────────────── */
+.product-category {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 8px;
+}
+.product-category i {
+  margin-right: 4px;
+}
+
+/* ─── Error 404 ─────────────────────────────────────────── */
+.error404-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 40px 20px;
+}
+.error404-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  max-width: 480px;
+}
+.error404-icon {
+  font-size: 3rem;
+  color: #aaa;
+}
+.error404-box h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  color: #333;
+}
+.error404-box p {
+  color: #666;
+  font-size: 0.95rem;
+}
+.error404-actions {
+  margin-top: 8px;
+}

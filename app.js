@@ -80,7 +80,11 @@ app.post('/register', (req, res) => {
 app.use((req, res) => {
   res.status(404).render('pages/error404', { title: 'Página no encontrada' });
 });
-
+// ─── 500 ──────────────────────────────────────────────────────────────────────
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render('pages/error500', { title: 'Error interno del servidor' });
+});
 app.listen(port, () => {
   console.log(`Aplicación funcionando en el puerto ${port}`);
 });

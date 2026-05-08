@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const ejsLayouts = require('express-ejs-layouts');
 
-const { getIndex, getProductDetail, getCategory, getProductList } = require('./controllers/productControllers');
+const { getIndex, getProductDetail, getCategory, getProductList, searchProducts } = require('./controllers/productControllers');
 const { getCart, addToCart, increaseQuantity, decreaseQuantity, emptyCart } = require('./controllers/cartController');
 
 const app = express();
@@ -32,6 +32,8 @@ app.use((req, res, next) => {
 });
 
 // ─── Rutas ────────────────────────────────────────────────────────────────────
+app.get('/search', searchProducts); //Buscador
+
 app.get('/categories/:category', getCategory);
 
 app.get('/', (req, res) => {

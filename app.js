@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const ejsLayouts = require('express-ejs-layouts');
 
 const { getIndex, getProductDetail, getCategory } = require('./controllers/productControllers');
 const { getCart, addToCart, increaseQuantity, decreaseQuantity, clearCart } = require('./controllers/cartController');
@@ -8,11 +9,13 @@ const app = express();
 const port = 3001;
 
 app.set('view engine', 'ejs');
+app.set('layout', 'layouts/main');
 
 // ─── Middlewares ──────────────────────────────────────────────────────────────
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static('public'));
+app.use(ejsLayouts);
 
 app.use(session({
   secret: 'miecommerce-secret-key',
@@ -32,7 +35,7 @@ app.use((req, res, next) => {
 app.get('/categories/:category', getCategory);
 
 app.get('/', (req, res) => {
-  res.render('pages/login', { title: 'Iniciar Sesión' });
+  res.render('pages/login', { title: 'Iniciar Sesión', layout: false });
 });
 
 app.get('/index', getIndex);
@@ -56,11 +59,11 @@ app.get('/checkout', (req, res) => {
 });
 
 app.get('/login', (req, res) => {
-  res.render('pages/login', { title: 'Iniciar Sesión' });
+  res.render('pages/login', { title: 'Iniciar Sesión', layout: false }); 
 });
 
 app.get('/register', (req, res) => {
-  res.render('pages/register', { title: 'Registrarse' });
+  res.render('pages/register', { title: 'Registrarse', layout: false });
 });
 
 app.post('/login', (req, res) => {

@@ -1,0 +1,26 @@
+<main style="padding: 40px 20px; max-width: 1200px; margin: 0 auto;">
+    <h2 style="margin-bottom: 30px;">Resultados de búsqueda para: "<%= searchQuery %>"</h2>
+
+    <% if (products && products.length > 0) { %>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+            <% products.forEach(product => { %>
+                <article style="border: 1px solid #ddd; padding: 20px; border-radius: 8px; width: 250px; text-align: center;">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 10px;"><%= product.name %></h3>
+                    <p style="font-size: 1.5rem; font-weight: 600; margin-bottom: 15px;">$<%= product.price %></p>
+                    <a href="/products/<%= product.id %>" style="display: inline-block; padding: 10px 15px; background-color: #0d6efd; color: white; text-decoration: none; border-radius: 5px;">
+                        Ver producto
+                    </a>
+                </article>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div style="text-align: center; margin-top: 50px; padding: 40px; background-color: #f8f9fa; border-radius: 8px;">
+            <i class="bi bi-search" style="font-size: 3rem; color: #6c757d; margin-bottom: 15px; display: block;"></i>
+            <h3 style="color: #333; margin-bottom: 10px;">No encontramos productos que coincidan con "<%= searchQuery %>"</h3>
+            <p style="color: #666; margin-bottom: 20px;">Intentá buscar usando otras palabras o revisá si está bien escrito.</p>
+            <a href="/index" style="padding: 10px 20px; background-color: #0d6efd; color: white; text-decoration: none; border-radius: 5px; display: inline-block;">
+                Volver al inicio
+            </a>
+        </div>
+    <% } %>
+</main>

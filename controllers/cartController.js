@@ -1,4 +1,4 @@
-const { getProductById } = require('../models/productModels');
+const { fetchProductById } = require('../services/productService');
 
 function initCart(req) {
   if (!req.session.cart) {
@@ -10,7 +10,7 @@ function getCart(req, res) {
   initCart(req);
 
   const cartItems = req.session.cart.map((item) => {
-    const product = getProductById(item.productId);
+    const product = fetchProductById(item.productId);
     return {
       productId: item.productId,
       quantity: item.quantity,
@@ -30,7 +30,7 @@ function addToCart(req, res) {
   initCart(req);
 
   const productId = Number(req.body.productId);
-  const product = getProductById(productId);
+  const product = fetchProductById(productId);
 
   if (!product) return res.redirect('/index');
 

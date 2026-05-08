@@ -1,4 +1,4 @@
-const { fetchProductById } = require('./productService');
+const { fetchProductById } = require('./productsService');
 
 function initCart(session) {
   if (!session.cart) {

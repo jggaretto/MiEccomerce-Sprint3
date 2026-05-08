@@ -5,7 +5,7 @@ const {
   increaseProduct,
   decreaseProduct,
   clearCart,
-} = require('../services/cartService');
+} = require('../service/cartService');
 
 function getCart(req, res) {
   const cartItems = getCartItems(req.session);

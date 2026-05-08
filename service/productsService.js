@@ -42,6 +42,11 @@ function fetchProductsSorted(sort) {
   return products;
 }
 
+function normalizeId(id) {
+  if (!/^\d+$/.test(String(id))) return null;
+  return parseInt(id, 10);
+}
+
 module.exports = {
   fetchAllProducts,
   fetchProductById,
@@ -50,4 +55,5 @@ module.exports = {
   fetchRelatedProducts,
   fetchProductsByCategory,
   fetchProductsSorted,
+  normalizeId,
 };

@@ -5,6 +5,7 @@ const {
   fetchRelatedProducts,
   fetchProductsByCategory,
   fetchProductsSorted,
+  normalizeId,
 } = require('../service/productsService');
 
 function getIndex(req, res) {
@@ -14,7 +15,13 @@ function getIndex(req, res) {
 }
 
 function getProductDetail(req, res) {
-  const product = fetchProductById(req.params.id);
+  const id = normalizeId(req.params.id);
+
+  if (id === null) {
+    return res.status(400).render('pages/error404', { title: 'ID inválido' });
+  }
+
+  const product = fetchProductById(id);
 
   if (!product) {
     return res.status(404).render('pages/error404', { title: 'Producto no encontrado' });

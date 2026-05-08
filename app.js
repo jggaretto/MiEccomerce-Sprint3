@@ -3,7 +3,7 @@ const session = require('express-session');
 const ejsLayouts = require('express-ejs-layouts');
 
 const { getIndex, getProductDetail, getCategory } = require('./controllers/productControllers');
-const { getCart, addToCart, increaseQuantity, decreaseQuantity, clearCart } = require('./controllers/cartController');
+const { getCart, addToCart, increaseQuantity, decreaseQuantity, emptyCart } = require('./controllers/cartController');
 
 const app = express();
 const port = 3001;
@@ -51,7 +51,7 @@ app.get('/cart', getCart);
 app.post('/cart/add', addToCart);
 app.post('/cart/increase', increaseQuantity);
 app.post('/cart/decrease', decreaseQuantity);
-app.post('/cart/clear', clearCart);
+app.post('/cart/clear', emptyCart);
 
 // ─── Otras páginas ────────────────────────────────────────────────────────────
 app.get('/checkout', (req, res) => {

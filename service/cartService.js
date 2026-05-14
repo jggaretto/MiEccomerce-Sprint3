@@ -1,4 +1,4 @@
-const { fetchProductById } = require('./productsService');
+const db = require('../db/database');
 
 function initCart(session) {
   if (!session.cart) {
@@ -6,11 +6,15 @@ function initCart(session) {
   }
 }
 
+function getProductFromDB(productId) {
+  return db.prepare('SELECT * FROM products WHERE id = ?').get(productId) || null;
+}
+
 function getCartItems(session) {
   initCart(session);
 
   return session.cart.map((item) => {
-    const product = fetchProductById(item.productId);
+    const product = getProductFromDB(item.productId);
     return {
       productId: item.productId,
       quantity: item.quantity,
@@ -29,7 +33,7 @@ function calculateTotal(cartItems) {
 function addProduct(session, productId) {
   initCart(session);
 
-  const product = fetchProductById(productId);
+  const product = getProductFromDB(productId);
   if (!product) return false;
 
   const existing = session.cart.find((item) => item.productId === productId);

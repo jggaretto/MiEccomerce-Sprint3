@@ -4,6 +4,7 @@ const {
   fetchProductById,
   fetchRelatedProducts,
   fetchProductsByCategory,
+  fetchProductsByName,
   fetchProductsSorted,
   normalizeId,
 } = require('../service/productsService');
@@ -50,22 +51,13 @@ function getProductList(req, res) {
 }
 // ─── US19: Buscador de productos ──────────────────────────────────────────────
 function searchProducts(req, res) {
-  // 1. Se Agarra lo que la persona escribió en la URL
-  const query = req.query.query ? req.query.query.toLowerCase() : '';
+  const query = req.query.query || '';
+  const products = fetchProductsByName(query);
 
-  // 2. Se trae todos los productos usando una función que ya tienen importada
-  const allProducts = fetchProductsSorted(); 
-
-  // 3. Filtramos los productos por coincidencia parcial en el nombre
-  const filteredProducts = allProducts.filter(product => 
-    product.name.toLowerCase().includes(query)
-  );
-
-  // 4. Mandamos los resultados a una nueva vista
-  res.render('pages/search', { 
+  res.render('pages/search', {
     title: 'Resultados de Búsqueda',
-    products: filteredProducts,
-    searchQuery: query
+    products,
+    searchQuery: query,
   });
 }
 module.exports = { getIndex, getProductDetail, getCategory, getProductList, searchProducts };

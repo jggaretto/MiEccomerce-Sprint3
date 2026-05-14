@@ -1,45 +1,51 @@
-const {
-  getAllProducts,
-  getProductById,
-  getSuggestedProducts,
-  getFeaturedProducts,
-  getRelatedProducts,
-  getProductsByCategory,
-} = require('../models/productModels');
+const db = require('../db/database');
 
 function fetchAllProducts() {
-  return getAllProducts();
+  return db.prepare('SELECT * FROM products').all();
 }
 
 function fetchProductById(id) {
-  return getProductById(id);
+  return db.prepare('SELECT * FROM products WHERE id = ?').get(id) || null;
 }
 
 function fetchSuggestedProducts(limit = 5, randomize = true) {
-  return getSuggestedProducts(limit, randomize);
+  const order = randomize ? 'ORDER BY RANDOM()' : '';
+  return db.prepare(`SELECT * FROM products ${order} LIMIT ?`).all(limit);
 }
 
 function fetchFeaturedProducts(limit = 10) {
-  return getFeaturedProducts(limit);
+  return db.prepare(
+    'SELECT * FROM products WHERE featured = 1 ORDER BY RANDOM() LIMIT ?'
+  ).all(limit);
 }
 
 function fetchRelatedProducts(category, excludeId, limit = 4) {
-  return getRelatedProducts(category, excludeId, limit);
+  if (!category) return [];
+  return db.prepare(
+    'SELECT * FROM products WHERE category = ? AND id != ? ORDER BY RANDOM() LIMIT ?'
+  ).all(category, excludeId, limit);
 }
 
 function fetchProductsByCategory(category) {
-  return getProductsByCategory(category);
+  return db.prepare(
+    'SELECT * FROM products WHERE LOWER(category) = LOWER(?)'
+  ).all(category);
+}
+
+function fetchProductsByName(query) {
+  return db.prepare(
+    "SELECT * FROM products WHERE LOWER(name) LIKE '%' || LOWER(?) || '%'"
+  ).all(query);
 }
 
 function fetchProductsSorted(sort) {
-  const products = getAllProducts();
   if (sort === 'asc') {
-    return products.slice().sort((a, b) => a.price - b.price);
+    return db.prepare('SELECT * FROM products ORDER BY price ASC').all();
   }
   if (sort === 'desc') {
-    return products.slice().sort((a, b) => b.price - a.price);
+    return db.prepare('SELECT * FROM products ORDER BY price DESC').all();
   }
-  return products;
+  return db.prepare('SELECT * FROM products').all();
 }
 
 function normalizeId(id) {
@@ -54,6 +60,7 @@ module.exports = {
   fetchFeaturedProducts,
   fetchRelatedProducts,
   fetchProductsByCategory,
+  fetchProductsByName,
   fetchProductsSorted,
   normalizeId,
 };

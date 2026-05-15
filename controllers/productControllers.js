@@ -16,15 +16,13 @@ function getIndex(req, res) {
 }
 
 function getProductDetail(req, res) {
-  const id = normalizeId(req.params.id);
+  const { status, product } = normalizeId(req.params.id);
 
-  if (id === null) {
+  if (status === 400) {
     return res.status(400).render('pages/error404', { title: 'ID inválido' });
   }
 
-  const product = fetchProductById(id);
-
-  if (!product) {
+  if (status === 404) {
     return res.status(404).render('pages/error404', { title: 'Producto no encontrado' });
   }
 

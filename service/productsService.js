@@ -48,9 +48,13 @@ function fetchProductsSorted(sort) {
   return db.prepare('SELECT * FROM products').all();
 }
 
+// DESPUÉS:
 function normalizeId(id) {
-  if (!/^\d+$/.test(String(id))) return null;
-  return parseInt(id, 10);
+  if (!/^\d+$/.test(String(id))) return { status: 400, product: null };
+  const numId = parseInt(id, 10);
+  const product = fetchProductById(numId);
+  if (!product) return { status: 404, product: null };
+  return { status: 200, product };
 }
 
 module.exports = {
